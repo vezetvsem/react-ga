@@ -94,7 +94,7 @@ var reactGA = {
         _debug = true;
       }
 
-      if (options.capitalize && options.capitalize === false) {
+      if (options.capitalize === false) {
         _capitalize = false;
       }
     }
@@ -239,13 +239,17 @@ var reactGA = {
      * GA requires a plugin
      * @param name {String} e.g. 'ecommerce' or 'myplugin'
      */
-    require: function(name) {
+    require: function(name, args) {
       if (typeof ga === 'function') {
-        ga('require', name);
+        if (args !== undefined) {
+          ga('require', name, args);
+        } else {
+          ga('require', name);
+        }
       }
 
       if (_debug) {
-        log('called ga(\'require\', \'' + name + '\');');
+        log('called ga(\'require\', \'' + name + '\', \'' + JSON.stringify(args) + '\');');
       }
     },
 
